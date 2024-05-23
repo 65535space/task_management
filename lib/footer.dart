@@ -31,7 +31,10 @@ class Footer extends StatelessWidget {
             flex: 2,
             child: Center(
               child: FloatingActionButton(
-                onPressed: onAddTask,
+                onPressed: () {
+                  debugPrint("FloatingActionButton is pressed!!");
+                  onAddTask();
+                },
                 child: const Icon(Icons.add),
               ),
             ),
