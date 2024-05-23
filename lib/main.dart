@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'first_page_and_button.dart';
+import 'footer.dart';
+import 'task_list_page.dart';
 
 void main() {
+  debugPaintSizeEnabled = true;
   runApp(const MainApp());
 }
 
@@ -11,13 +16,13 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'タスク管理アプリ',
-      home: MyAppScaffold(),
+      home: MyHomePage(),
     );
   }
 }
 
-class MyAppScaffold extends StatelessWidget {
-  const MyAppScaffold({super.key});
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +32,31 @@ class MyAppScaffold extends StatelessWidget {
         title: const Text("タスク管理アプリ"),
       ),
       body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TaskListButton(),
+          HoraizontalTaskList(),
+          Expanded(child: TaskSet()),
         ],
       ),
+      bottomNavigationBar:
+          Footer(onAddTask: () => TaskSet.of(context)!.addTask),
     );
   }
 }
 
-class TaskListButton extends StatefulWidget {
-  const TaskListButton({super.key});
+class HoraizontalTaskList extends StatefulWidget {
+  const HoraizontalTaskList({super.key});
 
   @override
-  TaskListButtonState createState() => TaskListButtonState();
+  HoraizontalTaskListState createState() => HoraizontalTaskListState();
 }
 
-class TaskListButtonState extends State<TaskListButton> {
-  List<Widget> buttons = [];
+class HoraizontalTaskListState extends State<HoraizontalTaskList> {
+  List<Widget> buttons = [
+    const FirstPageButton(),
+  ];
+
+  List<Widget> pages = [];
 
   void addButton() {
     setState(() {
@@ -62,6 +75,12 @@ class TaskListButtonState extends State<TaskListButton> {
       );
     });
   }
+
+  // void addPage() {
+  //   setState(() {
+  //     pages.add();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
